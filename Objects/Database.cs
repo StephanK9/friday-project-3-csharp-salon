@@ -1,5 +1,5 @@
 using System.Data;
-using System.Data.SqlCliennt;
+using System.Data.SqlClient;
 
 namespace HairSalon
 {
