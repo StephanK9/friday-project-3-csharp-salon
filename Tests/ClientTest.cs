@@ -53,6 +53,21 @@ namespace HairSalon
 
     }
 
+    [Fact]
+    public void Test_IfSavesMultipleClients_True()
+    {
+      Client newFirstClient = new Client("Joe Klein", 0);
+      Client newSecondClient = new Client("Ashley Watson", 0);
+      List<Client> clientList = new List<Client>{};
+
+      newFirstClient.Save();
+      newSecondClient.Save();
+      clientList = Client.GetAll();
+
+      Assert.Equal(2, clientList.Count);
+    }
+
+
     public void Dispose()
     {
       Client.DeleteAll();
