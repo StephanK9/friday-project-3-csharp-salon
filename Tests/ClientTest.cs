@@ -67,6 +67,20 @@ namespace HairSalon
       Assert.Equal(2, clientList.Count);
     }
 
+    [Fact]
+    public void Test_IfReturnsListOfClients_True()
+    {
+      Client newFirstClient = new Client("Joe Klein", 0);
+      Client newSecondClient = new Client("Ashley Watson", 0);
+      List<Client> clientList = new List<Client>{newFirstClient, newSecondClient};
+
+      newFirstClient.Save();
+      newSecondClient.Save();
+      List<Client> savedClients = Client.GetAll();
+
+      Assert.Equal(clientList, savedClients);
+    }
+
 
     public void Dispose()
     {
