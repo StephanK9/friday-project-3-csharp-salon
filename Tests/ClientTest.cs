@@ -40,13 +40,13 @@ namespace HairSalon
     public void Test_Save_SavesToDatabase_True()
     {
       //Arrange
-      Client testClient = new Client("Joe Klein", 1);
+      Client testClient = new Client("Joe Klein", 0);
       List<Client> clientList = new List<Client>{};
 
       //Act
       testClient.Save();
       clientList = Client.GetAll();
-      Client theClient = clientList[1];
+      Client theClient = clientList[0];
 
       //Assert
       Assert.Equal(testClient, theClient);
