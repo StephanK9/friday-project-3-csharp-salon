@@ -40,4 +40,6 @@ namespace HairSalon
       get { return false; }
     }
   }
+  public static string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hair_salon;Integrated Security=SSPI;";
+  }
 }
