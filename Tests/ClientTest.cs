@@ -8,9 +8,9 @@ using System.Data.SqlClient;
 
 namespace HairSalon
 {
-  public class HairSalonTest: IDisposable
+  public class ClientTest: IDisposable
   {
-    public HairSalonTest()
+    public ClientTest()
     {
       DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=hair_salon_test;Integrated Security=SSPI;";
     }
@@ -40,14 +40,15 @@ namespace HairSalon
     public void Test_Save_SavesToDatabase()
     {
       //Arrange
-      Client testClient = new Client("Joe", "Monday", 0);
+      Client testClient = new Client("Joe", "Monday", 1);
 
       //Act
       testClient.Save();
-      List<Client> ClientList = Client.GetAll();
+      List<Client> result = Client.GetAll();
+      List<Client> testList = new List<Client>{testClient};
 
       //Assert
-      Assert.Equal(ClientList[0], testClient);
+      Assert.Equal(testList[1], result);
     }
 
     public void Dispose()
