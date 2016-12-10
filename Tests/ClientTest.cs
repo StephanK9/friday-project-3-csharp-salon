@@ -120,6 +120,18 @@ namespace HairSalon
       Assert.Equal(foundClient, newClient);
     }
 
+    [Fact]
+    public void Test_IfCanFindByID_True()
+    {
+      Client newClient = new Client("Joe Klein", 1);
+      Client foundClient = new Client("Joe Klein", 1);
+
+      newClient.Save();
+      newClient = Client.FindById(newClient.GetId());
+
+      Assert.Equal(foundClient, newClient);
+    }
+
 
     public void Dispose()
     {
