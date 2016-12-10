@@ -93,6 +93,20 @@ namespace HairSalon
       Assert.Equal(0, savedClients.Count);
     }
 
+    [Fact]
+    public void Test_IfEditClientWorks_True()
+    {
+
+      Client newClient = new Client("Joe Klein", 1);
+      Client editClient = new Client("Joe K", 1);
+
+      newClient.Save();
+      newClient.Edit("Joe K", 1);
+      List<Client> savedEditClient = Client.GetAll();
+
+      Assert.Equal(editClient, savedEditClient[0]);
+    }
+
 
     public void Dispose()
     {
