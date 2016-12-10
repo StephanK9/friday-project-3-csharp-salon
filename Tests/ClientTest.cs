@@ -81,6 +81,18 @@ namespace HairSalon
       Assert.Equal(clientList, savedClients);
     }
 
+    [Fact]
+    public void Test_IfDeleteRemovesClientFromList_True()
+    {
+      Client newClient = new Client("Joe Klein", 0);
+
+      newClient.Save();
+      newClient.Delete();
+      List<Client> savedClients = Client.GetAll();
+
+      Assert.Equal(0, savedClients.Count);
+    }
+
 
     public void Dispose()
     {
