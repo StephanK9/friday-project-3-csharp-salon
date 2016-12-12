@@ -7,7 +7,7 @@ namespace HairSalon.Objects
   public class Stylist
   {
     public int _id;
-    public int _name;
+    public string _name;
 
     public Stylist(string name, int id = 0)
     {
@@ -24,8 +24,9 @@ namespace HairSalon.Objects
         else
         {
           Stylist newStylist = (Stylist) otherStylist;
-          bool nameEquality = (this.GetName() == newStylist.Name);
-          return (nameEquality);
+          bool idEquality = this.GetId() == newStylist.GetId();
+          bool nameEquality = (this.GetName() == newStylist.GetName());
+          return (idEquality && nameEquality);
         }
       }
 
@@ -90,7 +91,7 @@ namespace HairSalon.Objects
 
        while(rdr.Read())
        {
-         this.GetId() = rdr.GetInt32(0);
+         this._id = rdr.GetInt32(0);
        }
        if(rdr != null)
        {
@@ -100,6 +101,14 @@ namespace HairSalon.Objects
        {
          conn.Close();
        }
+     }
+     public void DeleteAll()
+     {
+       SqlConnection conn = DB.Connection();
+       conn.Open();
+       SqlCommand cmd = new SqlCommand("DELTE FROM stylists;", conn);
+       cmd.ExecuteNonQuery();
+       conn.Close();
      }
    }
  }
