@@ -102,11 +102,11 @@ namespace HairSalon.Objects
          conn.Close();
        }
      }
-     public void DeleteAll()
+     public static void DeleteAll()
      {
        SqlConnection conn = DB.Connection();
        conn.Open();
-       SqlCommand cmd = new SqlCommand("DELTE FROM stylists;", conn);
+       SqlCommand cmd = new SqlCommand("DELETE FROM stylists;", conn);
        cmd.ExecuteNonQuery();
        conn.Close();
      }

@@ -26,9 +26,22 @@ namespace  HairSalon
 
        Assert.Equal(expectedStylist, returnStylist);
     }
+    [Fact]
+    public void Test_IfGetAllStoresSeveralStylists_True()
+    {
+      Stylist newStylistOne = new Stylist("Beth Jones");
+      Stylist newStylistTwo = new Stylist("Jeremy Myer");
+      List<Stylist> allStylists = new List<Stylist>{};
+
+      newStylistOne.Save();
+      newStylistTwo.Save();
+      allStylists = Stylist.GetAll();
+
+      Assert.Equal(2, allStylists.Count);
+    }
     public void Dispose()
     {
-      Client.DeleteAll();
+      Stylist.DeleteAll();
     }
   }
 }
