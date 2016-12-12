@@ -174,6 +174,20 @@ namespace HairSalon.Objects
        return foundStylist;
      }
 
+     public static void Delete(int id)
+     {
+       SqlConnection conn = DB.Connection();
+       conn.Open();
+
+       SqlCommand cmd = new SqlCommand("DELETE FROM stylists WHERE id=@StylistId;", conn);
+       SqlParameter stylistIdParameter = new SqlParameter();
+       stylistIdParameter.ParameterName = "@StylistId";
+       stylistIdParameter.Value = id.ToString();
+       cmd.Parameters.Add(stylistIdParameter);
+       cmd.ExecuteNonQuery();
+       conn.Close();
+     }
+
      public static void DeleteAll()
      {
        SqlConnection conn = DB.Connection();

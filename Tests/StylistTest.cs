@@ -15,6 +15,13 @@ namespace  HairSalon
     }
 
     [Fact]
+    public void Test_StylistDatabaseEmptyAtFirst_True()
+    {
+      int result = Stylist.GetAll().Count;
+
+      Assert.Equal(0, result);
+    }
+    [Fact]
     public void Test_IfSaveAndReturnStylist_True()
     {
        Stylist expectedStylist = new Stylist("Beth Jones");
@@ -25,6 +32,14 @@ namespace  HairSalon
        Stylist returnStylist = allStylists[0];
 
        Assert.Equal(expectedStylist, returnStylist);
+    }
+    [Fact]
+    public void Test_Equal_ReturnsTrueIfNamesAreTheSame_True()
+    {
+      Stylist newStylistOne = new Stylist("Beth Jones");
+      Stylist newStylistTwo = new Stylist("Beth Jones");
+
+      Assert.Equal(newStylistOne, newStylistTwo);
     }
     [Fact]
     public void Test_IfGetAllStoresSeveralStylists_True()
@@ -63,6 +78,20 @@ namespace  HairSalon
       Stylist foundStylist = Stylist.Find(newStylist.GetId());
 
       Assert.Equal(newStylist, foundStylist);
+    }
+    [Fact]
+    public void Test_DeleteStylist_True()
+    {
+      Stylist newStylistOne = new Stylist("Beth Jones");
+      Stylist newStylistTwo = new Stylist("Jeremy Myer");
+
+      newStylistOne.Save();
+      newStylistTwo.Save();
+      Stylist.Delete(newStylistOne.GetId());
+      List<Stylist> result = Stylist.GetAll();
+      List<Stylist> testList = new List<Stylist> {newStylistTwo};
+
+      Assert.Equal(testList, result);
     }
     public void Dispose()
     {
