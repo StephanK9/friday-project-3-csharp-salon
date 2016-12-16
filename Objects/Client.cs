@@ -196,7 +196,7 @@ namespace HairSalon.Objects
       return locatedClient;
     }
 
-    public static Client FindById(int id)
+    public static Client FindById(int clientId)
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
@@ -205,19 +205,21 @@ namespace HairSalon.Objects
 
       SqlParameter clientIdParameter = new SqlParameter();
       clientIdParameter.ParameterName = "@ClientId";
-      clientIdParameter.Value = id;
+      clientIdParameter.Value = clientId.ToString();
       cmd.Parameters.Add(clientIdParameter);
 
       SqlDataReader rdr = cmd.ExecuteReader();
-      string clientName = null;
-      int stylistId = 0;
+      int foundClientId = 0;
+      string foundClientName = null;
+      int foundStylistId = 0;
 
       while(rdr.Read())
       {
-        clientName = rdr.GetString(1);
-        stylistId = rdr.GetInt32(2);
+        foundClientId = rdr.GetInt32(0);
+        foundClientName = rdr.GetString(1);
+        foundStylistId = rdr.GetInt32(2);
       }
-      Client locatedClient = new Client(clientName, stylistId, id);
+      Client foundClient = new Client(foundClientName, foundStylistId, foundClientId);
 
       if (rdr != null)
       {
@@ -227,7 +229,7 @@ namespace HairSalon.Objects
       {
         conn.Close();
       }
-      return locatedClient;
+      return foundClient;
     }
 
 

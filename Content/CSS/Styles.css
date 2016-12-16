@@ -1,0 +1,19 @@
+body {
+  background-color: #F4F6E8;
+  text-align: center;
+}
+
+
+.jumbotron {
+  background-color: #846C5B;
+  font-family: sans-serif;
+  color: #E2E8C0;
+}
+
+h2 {
+  color: #E2E8C0;
+}
+
+.panel-body{
+  background-color: #846C5B;
+}

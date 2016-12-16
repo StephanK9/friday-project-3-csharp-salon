@@ -139,54 +139,77 @@ namespace HairSalon.Objects
        return clientList;
      }
 
-     public static Stylist Find(int stylistId)
+     public void Edit(string name)
+     {
+       SqlConnection conn = DB.Connection();
+       conn.Open();
+       SqlCommand cmd = new SqlCommand("UPDATE stylists SET name = @StylistName, stylist_id = @StylistId WHERE id= StylistId;", conn);
+
+        SqlParameter stylistIdParameter = new SqlParameter();
+        stylistIdParameter.ParameterName = "@StylistId";
+        stylistIdParameter.Value = this.GetId();
+
+        SqlParameter stylistNameParameter = new SqlParameter();
+        stylistNameParameter.ParameterName = "@StylistName";
+        stylistNameParameter.Value = name;
+
+        cmd.Parameters.Add(stylistIdParameter);
+        cmd.Parameters.Add(stylistNameParameter);
+
+        cmd.ExecuteNonQuery();
+
+        conn.Close();
+      }
+
+      public static Stylist Find(int id)
+       {
+         SqlConnection conn = DB.Connection();
+         conn.Open();
+
+         SqlCommand cmd = new SqlCommand("SELECT * FROM stylists WHERE id = @StylistId;", conn);
+
+         SqlParameter stylistIdParameter = new SqlParameter();
+         stylistIdParameter.ParameterName = "@StylistId";
+         stylistIdParameter.Value = id;
+         cmd.Parameters.Add(stylistIdParameter);
+
+         SqlDataReader rdr = cmd.ExecuteReader();
+         string stylistName = null;
+
+         while(rdr.Read())
+         {
+           stylistName = rdr.GetString(1);
+         }
+         Stylist foundStylist = new Stylist(stylistName, id);
+
+         if (rdr != null)
+         {
+           rdr.Close();
+         }
+         if (conn != null)
+         {
+           conn.Close();
+         }
+         return foundStylist;
+       }
+
+     public static void Delete()
      {
        SqlConnection conn = DB.Connection();
        conn.Open();
 
-       SqlCommand cmd = new SqlCommand("Select * FROM stylists WHERE id=@StylistId;", conn);
-
        SqlParameter stylistIdParameter = new SqlParameter();
-       stylistIdParameter.ParameterName = "@StylistId";
-       stylistIdParameter.Value = stylistId.ToString();
-       cmd.Parameters.Add(stylistIdParameter);
-       SqlDataReader rdr = cmd.ExecuteReader();
+      stylistIdParameter.ParameterName = "@StylistId";
+      stylistIdParameter.Value = this.GetId();
 
-       int foundStylistId = 0;
-       string foundStylistName = null;
+      cmd.Parameters.Add(stylistIdParameter);
+      cmd.ExecuteNonQuery();
 
-
-       while(rdr.Read())
-       {
-         foundStylistId = rdr.GetInt32(0);
-         foundStylistName = rdr.GetString(1);
-       }
-       Stylist foundStylist = new Stylist(foundStylistName, foundStylistId);
-
-       if(rdr != null)
-       {
-         rdr.Close();
-       }
-       if(conn != null)
-       {
-         conn.Close();
-       }
-       return foundStylist;
-     }
-
-     public static void Delete(int id)
-     {
-       SqlConnection conn = DB.Connection();
-       conn.Open();
-
-       SqlCommand cmd = new SqlCommand("DELETE FROM stylists WHERE id=@StylistId;", conn);
-       SqlParameter stylistIdParameter = new SqlParameter();
-       stylistIdParameter.ParameterName = "@StylistId";
-       stylistIdParameter.Value = id.ToString();
-       cmd.Parameters.Add(stylistIdParameter);
-       cmd.ExecuteNonQuery();
-       conn.Close();
-     }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
 
      public static void DeleteAll()
      {
